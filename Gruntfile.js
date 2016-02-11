@@ -3,6 +3,31 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      options: {
+        separator: ';'
+      },
+      dist : {
+        src : [
+              'public/client/app.js',
+              'public/client/link.js',
+              'public/client/links.js',
+              'public/client/linkView.js',
+              'public/client/linksView.js',
+              'public/client/createLinkView.js',
+              'public/client/router.js'
+              ],
+        dest : 'public/build/production-client.js',
+      },
+      dist2 : {
+         src : [
+        'public/lib/jquery.js',
+         'public/lib/underscore.js',
+         'public/lib/backbone.js',
+         'public/lib/handlebars.js'
+         ],
+        dest : 'public/build/production-lib.js'
+      }
+
     },
 
     mochaTest: {
@@ -21,23 +46,40 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      build: {
+        src: 'public/build/production-client.js',
+        dest: 'public/build/production-client.min.js'
+      },
+      build2: {
+        src: 'public/build/production-lib.js',
+        dest: 'public/build/production-lib.min.js'
+      }
+      
     },
 
     jshint: {
       files: [
-        // Add filespec list here
+        'app/**/*.js',
+        'lib/**/*.js',
+        'Gruntfile.js',
+        'index.js',
+        'server.js'
       ],
       options: {
         force: 'true',
         jshintrc: '.jshintrc',
         ignores: [
           'public/lib/**/*.js',
-          'public/dist/**/*.js'
+          'public/build/**/*.js'
         ]
       }
     },
 
     cssmin: {
+      css: {
+        src: 'public/style.css',
+        dest: 'public/build/production.min.css'
+      }
     },
 
     watch: {
@@ -88,6 +130,8 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
   // Main grunt tasks
   ////////////////////////////////////////////////////
+
+  grunt.registerTask('default', ['concat', 'cssmin', 'uglify', 'jshint']);
 
   grunt.registerTask('test', [
     'mochaTest'
