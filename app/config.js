@@ -3,7 +3,7 @@ var path = require('path');
 /////Can do if(NODE_ENV === production) use mongo, else use sqlite (e.g)
 ///////////////////////////////////
 var mongoose = require('mongoose');
-var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost:test';
+var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost:shortly-deploy';
 
 //var Schema = mongoose.Schema;
 mongoose.connect(mongoURI);
